@@ -24,12 +24,6 @@ keys.addEventListener("click", (event) => {
     return;
   }
 
-  //   if (target.classList.contains("decimal")) {
-  //     inputDecimal(target.value);
-  //     updateDisplay();
-  //     return;
-  //   }
-
   if (target.classList.contains("clear")) {
     resetCalculator();
     updateDisplay();
@@ -47,21 +41,13 @@ function inputDigit(digit) {
     calculator.displayValue = digit;
     calculator.waitingForSecondOperand = false;
   } else {
-    calculator.displayValue =
-      displayValue === "0" ? digit : displayValue + digit;
+    if (displayValue === "0") {
+      calculator.displayValue = digit;
+    } else {
+      calculator.displayValue = displayValue + digit;
+    }
   }
 }
-
-// function inputDecimal(dot) {
-//   if (calculator.waitingForSecondOperand === true) {
-//     calculator.displayValue = "0.";
-//     calculator.waitingForSecondOperand = false;
-//     return;
-//   }
-//   if (!calculator.displayValue.includes(dot)) {
-//     calculator.displayValue += dot;
-//   }
-// }
 
 function handleOperator(nextOperator) {
   const { firstOperand, displayValue, operator } = calculator;
@@ -75,7 +61,7 @@ function handleOperator(nextOperator) {
     calculator.firstOperand = inputValue;
   } else if (operator) {
     const result = calculate(firstOperand, inputValue, operator);
-    calculator.displayValue = `${parseFloat(result.toFixed(100))}`; //contemplated limit
+    calculator.displayValue = `${parseFloat(result)}`; //contemplated limit
     calculator.firstOperand = result;
   }
 
@@ -84,16 +70,16 @@ function handleOperator(nextOperator) {
 }
 
 function calculate(num1, num2, operator) {
-  if (operator === "+") {
-    return num1 + num2;
-  } else if (operator === "-") {
-    return num1 - num2;
-  } else if (operator === "*") {
-    return num1 * num2;
-  } else if (operator === "/") {
-    return num1 / num2;
+  switch (operator) {
+    case "+":
+      return num1 + num2;
+    case "-":
+      return num1 - num2;
+    case "*":
+      return num1 * num2;
+    case "/":
+      return num1 / num2;
   }
-  return num2;
 }
 
 function resetCalculator() {
