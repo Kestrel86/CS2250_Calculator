@@ -4,15 +4,12 @@ const calculator = {
   operator: null,
 };
 
-//can use stack, lifo
-
 const keys = document.querySelector(".keys");
 const display = document.querySelector(".screen");
 
 function handleInput(val) {
   display.value += val;
 }
-//Think of different way to do this, maybe use eventListener
 
 function handleOperator(operand) {
   calculator.operator = operand;
@@ -20,46 +17,30 @@ function handleOperator(operand) {
 }
 
 function compute() {
-  calculate(calculator.operator);
+  display.value = calculate(display.value);
 }
 
 function clearAll() {
   display.value = "";
 }
 
-function calculate(operator) {
-  var numArr = 0;
-  var ans = 0;
-  switch (operator) {
-    case "+":
-      numArr = display.split("+");
-      ans = Number(numArr[0]) + Number(numArr[1]);
-      break;
-    case "-":
-      numArr = display.split("-");
-      ans = Number(numArr[0]) - Number(numArr[1]);
-      break;
+function calculate(string) {
+  let numArr = string.split(/\b\s*([+\/*-])\s*/);
+  const expression = numArr[1];
+  switch (expression) {
     case "*":
-      numArr = display.split("*");
-      ans = Number(numArr[0]) * Number(numArr[1]);
+      return parseInt(numArr[0]) * parseInt(numArr[2]);
       break;
     case "/":
-      numArr = display.split("/");
-      ans = Number(numArr[0]) - Number(numArr[1]);
+      return parseInt(numArr[0]) / parseInt(numArr[2]);
+      break;
+    case "+":
+      return parseInt(numArr[0]) + parseInt(numArr[2]);
+      break;
+    case "-":
+      return parseInt(numArr[0]) - parseInt(numArr[2]);
       break;
     default:
-      val = "Error!!!";
+      return `Error ${string} contains an invalid operation.`;
   }
-  return val;
 }
-
-/*
-May Change format, found breakthrough with switch statement, revert to old javascript calculator
-*/
-
-/*
-ex: 
-const equation = "3+5-6*5";
-
-equation.split("+");
-*/
