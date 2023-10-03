@@ -4,12 +4,19 @@ const calculator = {
   operator: null,
 };
 
+//can use stack, lifo
+
 const keys = document.querySelector(".keys");
 const display = document.querySelector(".screen");
 
+function handleInput(val) {
+  display.value += val;
+}
+//Think of different way to do this, maybe use eventListener
+
 function handleOperator(operand) {
   calculator.operator = operand;
-  display.value += "";
+  display.value += operand;
 }
 
 function compute() {
@@ -21,19 +28,24 @@ function clearAll() {
 }
 
 function calculate(operator) {
+  var numArr = 0;
+  var ans = 0;
   switch (operator) {
     case "+":
-      var numArr = display.split("+");
-      var ans = Number(numArr[0]) + Number(numArr[1]);
+      numArr = display.split("+");
+      ans = Number(numArr[0]) + Number(numArr[1]);
       break;
     case "-":
-      val = num1 - num2;
+      numArr = display.split("-");
+      ans = Number(numArr[0]) - Number(numArr[1]);
       break;
     case "*":
-      val = num1 * num2;
+      numArr = display.split("*");
+      ans = Number(numArr[0]) * Number(numArr[1]);
       break;
     case "/":
-      val = num1 / num2;
+      numArr = display.split("/");
+      ans = Number(numArr[0]) - Number(numArr[1]);
       break;
     default:
       val = "Error!!!";
@@ -43,4 +55,11 @@ function calculate(operator) {
 
 /*
 May Change format, found breakthrough with switch statement, revert to old javascript calculator
+*/
+
+/*
+ex: 
+const equation = "3+5-6*5";
+
+equation.split("+");
 */
