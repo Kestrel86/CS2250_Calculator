@@ -1,11 +1,32 @@
 const calculator = {
-  num1: null,
-  num2: null,
   operator: null,
 };
 
 const keys = document.querySelector(".keys");
 const display = document.querySelector(".screen");
+
+keys.addEventListener("click", (event) => {
+  const { target } = event;
+  if (!target.matches("button")) {
+    return;
+  }
+
+  if (target.classList.contains("operator")) {
+    handleOperator(target.value);
+  }
+
+  if (target.classList.contains("num")) {
+    handleInput(target.value);
+  }
+
+  if (target.classList.contains("clear")) {
+    clearAll();
+  }
+
+  if (target.classList.contains("equal-sign")) {
+    compute();
+  }
+});
 
 function handleInput(val) {
   display.value += val;
@@ -41,6 +62,7 @@ function calculate(string) {
       return parseInt(numArr[0]) - parseInt(numArr[2]);
       break;
     default:
-      return `Error ${string} contains an invalid operation.`;
+      alert(`Error ${string} contains an invalid operation.`);
+      return;
   }
 }
